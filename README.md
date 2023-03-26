@@ -6,7 +6,7 @@ Radix sort este un algoritm de sortare eficient care se bazează pe ideea de a s
 
 # Variante
 
-Varianta secvențială va fi create folosind C++. <br />
+Varianta secvențială va fi creata folosind C++. <br />
 Variantele paralele vor folosi: CUDA si MPI. <br />
 
 # Informatii platforma
