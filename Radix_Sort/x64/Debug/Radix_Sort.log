@@ -1,0 +1,3 @@
+﻿  RadixSortSeq.cpp
+E:\FACULTATE\Anul3\Semestrul2\APD\Curs\Varianta Secventiala\Radix_Sort\Radix_Sort\RadixSortSeq.cpp(37,9): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Radix_Sort.vcxproj -> E:\FACULTATE\Anul3\Semestrul2\APD\Curs\Varianta Secventiala\Radix_Sort\x64\Debug\Radix_Sort.exe
