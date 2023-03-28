@@ -16,4 +16,6 @@ Frecventa: 2,60 GHz <br />
 RAM: 8GB <br />
 Placa video: NVidia GeForce GTX 1650 <br />
 
+# GDOCS
+https://docs.google.com/document/d/1oVLRFHMgdAxpvquWL4yInNlUvvFWJYXQ5a9_KJ3p4BY/edit#
 
