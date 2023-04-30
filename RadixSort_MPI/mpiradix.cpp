@@ -1,5 +1,4 @@
-﻿#include <algorithm>
-#include <cstring>
+﻿#include <cstring>
 #include <chrono>
 #include <iomanip>
 #include <fstream>
@@ -14,7 +13,6 @@
 
 using namespace std;
 using namespace chrono;
-
 
 void radix_sort(vector<int>& arr) {
     int max_val = *max_element(arr.begin(), arr.end());
@@ -60,13 +58,12 @@ int main(int argc, char** argv) {
     int world_size;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-    const int n = 10;
+    const int n = 100;
 
     // Distribuim datele catre toate procesele
     vector<int> arr;
     if (world_rank == 0) {
-
-        ifstream fin("inputs/input1.txt");
+        ifstream fin("inputs/input2.txt");
         arr.reserve(n);
         int num;
         while (fin >> num) {
@@ -74,34 +71,37 @@ int main(int argc, char** argv) {
         }
         fin.close();
     }
-    vector<int> local_arr(n / world_size);
-    MPI_Scatter(arr.data(), n / world_size, MPI_INT, local_arr.data(), n / world_size, MPI_INT, 0, MPI_COMM_WORLD);
 
+    int local_n = n / world_size;
+
+
+    vector<int> local_arr(local_n);
+
+    MPI_Scatter(arr.data(), local_n, MPI_INT, local_arr.data(), local_n, MPI_INT, 0, MPI_COMM_WORLD);
     auto start_time = high_resolution_clock::now();
-    // Sortam vectorii locali folosind algoritmul radix sort
+
     radix_sort(local_arr);
 
-    // Colectam datele sortate de la toate procesele
     vector<int> sorted_arr(n);
-    MPI_Allgather(local_arr.data(), n / world_size, MPI_INT, sorted_arr.data(), n / world_size, MPI_INT, MPI_COMM_WORLD);
+    MPI_Allgather(local_arr.data(), local_n, MPI_INT, sorted_arr.data(), local_n, MPI_INT, MPI_COMM_WORLD);
 
     if (world_rank == 0) {
-
         auto end_time = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(end_time - start_time);
         double total_time = double(duration.count()) / 1000000;
-
-        ofstream foutresult("outputs/output10.out");
+        radix_sort(sorted_arr);
+        ofstream foutresult("outputs/output2.txt");
+        foutresult << "Sorted array: ";
         for (int i = 0; i < n; i++) {
-            foutresult << sorted_arr[i] << endl;
-            cout << sorted_arr[i] << endl;
+            foutresult << sorted_arr[i] << " ";
         }
-        foutresult.close();
+        foutresult << "\n";
 
-        cout << "Timpul total de executie al functiei de sortare: " << fixed << setprecision(6) << total_time << " secunde" << endl;
+        foutresult << "Execution time: " << fixed << setprecision(6) << total_time << " seconds\n";
+
+        foutresult.close();
     }
 
     MPI_Finalize();
-
     return 0;
 }

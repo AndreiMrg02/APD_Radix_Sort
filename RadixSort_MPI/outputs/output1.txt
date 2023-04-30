@@ -1,0 +1,2 @@
+Sorted array: 1 2 3 4 5 5 6 8 9 10 
+Execution time: 0.000708 seconds
