@@ -58,12 +58,12 @@ int main(int argc, char** argv) {
     int world_size;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-    const int n = 100;
+    const int n = 1000000;
 
     // Distribuim datele catre toate procesele
     vector<int> arr;
     if (world_rank == 0) {
-        ifstream fin("inputs/input2.txt");
+        ifstream fin("inputs/input10.txt");
         arr.reserve(n);
         int num;
         while (fin >> num) {
@@ -86,10 +86,10 @@ int main(int argc, char** argv) {
     MPI_Allgather(local_arr.data(), local_n, MPI_INT, sorted_arr.data(), local_n, MPI_INT, MPI_COMM_WORLD);
 
     if (world_rank == 0) {
+        radix_sort(sorted_arr);
         auto end_time = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(end_time - start_time);
         double total_time = double(duration.count()) / 1000000;
-        radix_sort(sorted_arr);
         ofstream foutresult("outputs/output2.txt");
         foutresult << "Sorted array: ";
         for (int i = 0; i < n; i++) {
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
         }
         foutresult << "\n";
 
-        foutresult << "Execution time: " << fixed << setprecision(6) << total_time << " seconds\n";
+        cout << "Execution time: " << fixed << setprecision(6) << total_time << " seconds\n";
 
         foutresult.close();
     }
