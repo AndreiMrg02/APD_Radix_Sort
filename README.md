@@ -1,4 +1,4 @@
-# Radix_Sort_Sequential
+# Radix_Sort_Threads
 Nume: Murgu Andrei-Marian <br />
 # Enunt:
 
